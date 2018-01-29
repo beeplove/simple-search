@@ -1,7 +1,7 @@
 require 'entity/entity'
 
 
-RSpec.describe ::Entity do
+RSpec.describe Entity do
 
   describe "#list" do
     it "returns list of entities avaiable"
