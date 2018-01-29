@@ -4,7 +4,9 @@ require 'entity/entity'
 RSpec.describe Entity do
 
   describe "#list" do
-    it "returns list of entities avaiable"
+    it "returns list of entities avaiable" do
+      expect(Entity.list).to eq(Entity.class_variable_get :@@list)
+    end
   end
 
   describe "#fields" do

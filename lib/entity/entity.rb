@@ -1,4 +1,4 @@
-require 'entity/error'
+require 'json'
 
 class Entity
   #
@@ -7,6 +7,7 @@ class Entity
   #
 
   @@data = nil
+  @@list = nil
 
   #
   # Entity.list returns a list of entity available in the database
