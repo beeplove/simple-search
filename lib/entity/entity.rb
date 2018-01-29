@@ -1,4 +1,5 @@
 require 'json'
+require 'entity/error'
 
 class Entity
   #
@@ -9,11 +10,20 @@ class Entity
   @@data = nil
   @@list = nil
 
+
+  def initialize config={}
+    raise EntityError, "need config with db_path to initialize Entity" unless config["db_path"]
+    raise EntityError, "db_path doen't exist" unless Dir.exists?(config["db_path"])
+
+    @db_path = config["db_path"]
+  end
+
   #
-  # Entity.list returns a list of entity available in the database
+  # list returns a list of entity available in the database
   #
-  def self.list
-    Entity.load if @@list.nil?
+  def list
+    load if @@list.nil?
+
     @@list
   end
 
@@ -21,9 +31,7 @@ class Entity
   # Entity.fields take either id or name as param
   # to return list of available fields in the entity
   #
-  def self.fields entity
-    Entity.load if @@data.nil?
-
+  def Entity.fields_for entity
     [
       '_id',
       'url',
@@ -39,16 +47,13 @@ class Entity
   # TODO:
   #   - check @@data, @@list
   #   - take force into account
-  def self.load force=false
-    # TODO: Move dirname to a config
-    dirname = "#{Dir.pwd}/lib/entity/db"
-
+  def load force=false
     id = 1
     data_hash = nil
     list_hash = nil
 
-    Dir.entries(dirname).sort.each do |filename|
-      filepath = dirname + "/" + filename
+    Dir.entries(@db_path).sort.each do |filename|
+      filepath = @db_path + "/" + filename
 
       next unless File.file?(filepath)
       file = File.read(filepath)

@@ -1,0 +1,1 @@
+class EntityError < ArgumentError ; end

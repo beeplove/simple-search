@@ -1,0 +1,14 @@
+default: &default
+  entity:
+    db_path: <%= "#{Rails.root}/lib/entity/db" %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  entity:
+    db_path: <%= "#{Rails.root}/spec/mock/entity" %>
+
+production:
+  <<: *default
