@@ -1,0 +1,3 @@
+class Wordify
+
+end
