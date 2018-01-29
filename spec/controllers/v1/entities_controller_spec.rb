@@ -2,11 +2,16 @@ require 'rails_helper'
 
 RSpec.describe V1::EntitiesController, type: :controller do
 
-  describe "GET entities" do
-    it "returns list of available entities"
+  describe "GET #index" do
+    it "returns list of available entities" do
+      get :index
+
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to eq('application/json')
+    end
   end
 
-  describe "GET entities/:id/fields" do
+  describe "GET #fields" do
     it "returns list of available fields in an entity"
   end
 end
