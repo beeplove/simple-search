@@ -9,6 +9,6 @@ class V1::SearchController < ApplicationController
   #
   # GET /search
   def index
-    render json: { id: 1, name: "Mohammad Khan" }
+    jsonator id: 1, name: "Mohammad Khan"
   end
 end
