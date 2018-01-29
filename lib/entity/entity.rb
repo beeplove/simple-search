@@ -1,3 +1,5 @@
+require 'entity/error'
+
 class Entity
   #
   # Assumptions:
@@ -45,7 +47,29 @@ class Entity
   #
   # Load json data from db/ folder to @@data
   #
+  # TODO:
+  #   - check @@data, @@list
+  #   - take force into account
   def self.load force=false
+    # TODO: Move dirname to a config
+    dirname = "#{Dir.pwd}/lib/entity/db"
+
+    @@data = {}
+    @@list = []
+    id = 0
+
+    Dir.entries(dirname).sort.each do |filename|
+      filepath = dirname + "/" + filename
+
+      next unless File.file?(filepath)
+      file = File.read(filepath)
+
+      name = filename.sub(/\.json$/i, '')
+      id = id + 1
+
+      @@data["id"] = JSON.parse(file)
+      @@list << { id: id, name: name }
+    end
   end
 
 end
