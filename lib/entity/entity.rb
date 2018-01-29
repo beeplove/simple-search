@@ -13,20 +13,8 @@ class Entity
   # Entity.list returns a list of entity available in the database
   #
   def self.list
-    [
-      {
-        id: 1,
-        name: 'organizations'
-      },
-      {
-        id: 2,
-        name: 'tickets'
-      },
-      {
-        id: 3,
-        name: 'users'
-      }
-    ]
+    Entity.load if @@list.nil?
+    @@list
   end
 
   #
@@ -55,9 +43,9 @@ class Entity
     # TODO: Move dirname to a config
     dirname = "#{Dir.pwd}/lib/entity/db"
 
-    @@data = {}
-    @@list = []
-    id = 0
+    id = 1
+    data_hash = nil
+    list_hash = nil
 
     Dir.entries(dirname).sort.each do |filename|
       filepath = dirname + "/" + filename
@@ -66,11 +54,17 @@ class Entity
       file = File.read(filepath)
 
       name = filename.sub(/\.json$/i, '')
-      id = id + 1
 
-      @@data["id"] = JSON.parse(file)
-      @@list << { id: id, name: name }
+      data_hash = {} if data_hash.nil?
+      list_hash = [] if list_hash.nil?
+
+      data_hash["id"] = JSON.parse(file)
+      list_hash << { id: id, name: name }
+      id = id + 1
     end
+
+    @@data = data_hash
+    @@list = list_hash
   end
 
 end
