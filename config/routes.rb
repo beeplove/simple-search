@@ -3,6 +3,11 @@ Rails.application.routes.draw do
 
   scope module: :v1 do
     resources :search, only: :index
+    resources :entities, only: :index do
+      member do
+        get :fields
+      end
+    end
   end
 
 end

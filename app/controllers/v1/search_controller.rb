@@ -7,6 +7,7 @@ class V1::SearchController < ApplicationController
   #   - e : perform search within the data of an entity, such as ticket, user, etc.
   #   - f : perform search within a field, such as name, email, tags, subject, description, etc.
   #
+  # GET /search
   def index
     render json: { id: 1, name: "Mohammad Khan" }
   end
