@@ -12,6 +12,11 @@ RSpec.describe V1::EntitiesController, type: :controller do
   end
 
   describe "GET #fields" do
-    it "returns list of available fields in an entity"
+    it "returns list of available fields in an entity" do
+      get :fields, params: { id: 1 }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to eq('application/json')
+    end
   end
 end
