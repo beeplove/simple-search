@@ -4,14 +4,14 @@ require 'entity/entity'
 RSpec.describe Entity do
   let(:config) { CONFIG["entity"] }
 
-  describe "#list" do
+  describe ".list" do
     it "returns list of entities avaiable" do
       entity = Entity.new(config)
-      expect(entity.list).to eq(Entity.class_variable_get :@@list)
+      expect(entity.list.any?{|item| item[:name] == 'person'}).to eq(true)
     end
   end
 
-  describe "#fields" do
+  describe "#fields_for" do
     it "returns list of fields avaiable for a given entity name"
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Entity do
     it "loads all data from database" do
       entity = Entity.new(config)
       entity.load
-      expect(Entity.class_variable_get :@@data).not_to be_nil
+      expect(Entity.class_variable_get :@@data).not_to eq(nil)
     end
   end
 end

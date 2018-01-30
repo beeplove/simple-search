@@ -28,10 +28,10 @@ class Entity
   end
 
   #
-  # Entity.fields take either id or name as param
+  # Entity.fields take entity_id as a param
   # to return list of available fields in the entity
   #
-  def Entity.fields_for entity
+  def Entity.fields_for entity_id
     [
       '_id',
       'url',
