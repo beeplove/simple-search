@@ -18,5 +18,7 @@ RSpec.describe V1::EntitiesController, type: :controller do
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to eq('application/json')
     end
+
+    it "returns error when entity id doesn't exist in database"
   end
 end
