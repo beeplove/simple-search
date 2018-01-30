@@ -14,11 +14,12 @@ module SearchConcern
     @wordify.load(@entity.data)
   end
 
-  def perform_search query
+  def perform_search query, opts={}
     # wordify chunk: "hiking"=>{"person"=>{"activities"=>[["1", "1"]]}, "store"=>{"tags"=>[["2", "2"]]}}
-
     result = {}
-    entity_names = @entity.list.values
+
+    entity_names = opts[:entity_names]
+    entity_names = @entity.list.values if entity_names.blank?
 
     entity_names.each do |entity_name|                            # "person"
       next unless @wordify.data[query] && @wordify.data[query][entity_name]
