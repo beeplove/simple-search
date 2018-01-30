@@ -37,7 +37,16 @@ describe SearchConcernController, type: :controller do
       end
     end
 
-    context "when query, entity_names and fields are provided"
+    context "when query, entity_names and fields are provided" do
+      let(:result) { concern.perform_search("hiking", entity_names: ["person"], fields: ["activities"]) }
+
+      it "returns only documents matches within entity and field pair" do
+        people = result["person"]
+
+        expect(people.size).to eq(2)
+      end
+    end
+
     context "when query and fields are provided"
   end
 end
