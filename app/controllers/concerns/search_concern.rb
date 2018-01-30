@@ -16,8 +16,6 @@ module SearchConcern
 
   def perform_search query, opts={}
     # wordify chunk: "hiking"=>{"person"=>{"activities"=>[["1", "1"]]}, "store"=>{"tags"=>[["2", "2"]]}}
-    result = {}
-
     query = query.to_s
 
     entity_names = opts[:entity_names]
@@ -25,16 +23,23 @@ module SearchConcern
 
     fields = opts[:fields] || []
 
+    duplicate_check = {}
+    result = {}
+
     entity_names.each do |entity_name|                            # "person"
       next unless @wordify.get(query) && @wordify.get(query)[entity_name]
 
       result[entity_name] = [] unless result[entity_name]
+      duplicate_check[entity_name] = {} unless duplicate_check[entity_name]
 
       @wordify.get(query)[entity_name].each do |key, values|     # "activities"=>[["1", "1"]]
         next if fields.present? && !fields.include?(key)
 
         values.each do |value|                                    # ["1", "1"]
-          result[entity_name] << @entity.data[entity_name][value[0]]
+          unless duplicate_check[entity_name][value[0]]
+            result[entity_name] << @entity.data[entity_name][value[0]]
+            duplicate_check[entity_name][value[0]] = true
+          end
         end
       end
     end
