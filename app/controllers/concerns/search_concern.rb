@@ -21,12 +21,16 @@ module SearchConcern
     entity_names = opts[:entity_names]
     entity_names = @entity.list.values if entity_names.blank?
 
+    fields = opts[:fields] || []
+
     entity_names.each do |entity_name|                            # "person"
       next unless @wordify.data[query] && @wordify.data[query][entity_name]
 
       result[entity_name] = [] unless result[entity_name]
 
       @wordify.data[query][entity_name].each do |key, values|     # "activities"=>[["1", "1"]]
+        next if fields.present? && !fields.include?(key)
+
         values.each do |value|                                    # ["1", "1"]
           result[entity_name] << @entity.data[entity_name][value[0]]
         end

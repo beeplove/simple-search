@@ -5,6 +5,9 @@
     "activities": [
       "running",
       "hiking"
+    ],
+    "wishlist": [
+      "swimming"
     ]
   },
   {
@@ -13,6 +16,8 @@
     "activities": [
       "swimming",
       "running"
+    ],
+    "wishlist": [
     ]
   }
 ]
