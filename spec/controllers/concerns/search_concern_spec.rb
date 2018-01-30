@@ -14,7 +14,12 @@ describe SearchConcernController, type: :controller do
 
     it "does't contain duplicate document"
 
-    it "does perform search in case-insensitive mode"
+    it "does perform search in case-insensitive mode" do
+      result = concern.perform_search("HEALTH")
+      stores = result["store"]
+
+      expect(stores.size).to eq(1)
+    end
 
     it "does take care of string conversion when perform a search by a number" do
       result = concern.perform_search(1)
