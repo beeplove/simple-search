@@ -18,18 +18,18 @@ class Wordify
   #
   # return example:
   # {
-  #   "1"=>{"person"=>[["1", "_id"]], "store"=>[["1", "_id"]]},
-  #   "Mohammad Khan"=>{"person"=>[["1", "name"]]},
-  #   "running"=>{"person"=>[["1", "activities", "0"], ["2", "activities", "1"]], "store"=>[["2", "tags", "1"]]},
-  #   "hiking"=>{"person"=>[["1", "activities", "1"]], "store"=>[["2", "tags", "2"]]},
-  #   "2"=>{"person"=>[["2", "_id"]], "store"=>[["2", "_id"]]},
-  #   "John Smith"=>{"person"=>[["2", "name"]]},
-  #   "swimming"=>{"person"=>[["2", "activities", "0"]], "store"=>[["2", "tags", "3"]]},
-  #   "publix"=>{"store"=>[["1", "name"]]},
-  #   "grocery"=>{"store"=>[["1", "tags", "0"]]},
-  #   "health"=>{"store"=>[["1", "tags", "1"]]},
-  #   "rei"=>{"store"=>[["2", "name"]]},
-  #   "camping"=>{"store"=>[["2", "tags", "0"]]}
+  #   "1"=>{"person"=>{"_id"=>[["1"]]}, "store"=>{"_id"=>[["1"]]}},
+  #   "Mohammad Khan"=>{"person"=>{"name"=>[["1"]]}},
+  #   "running"=>{"person"=>{"activities"=>[["1", "0"], ["2", "1"]]}, "store"=>{"tags"=>[["2", "1"]]}},
+  #   "hiking"=>{"person"=>{"activities"=>[["1", "1"]]}, "store"=>{"tags"=>[["2", "2"]]}},
+  #   "2"=>{"person"=>{"_id"=>[["2"]]}, "store"=>{"_id"=>[["2"]]}},
+  #   "John Smith"=>{"person"=>{"name"=>[["2"]]}},
+  #   "swimming"=>{"person"=>{"activities"=>[["2", "0"]]}, "store"=>{"tags"=>[["2", "3"]]}},
+  #   "publix"=>{"store"=>{"name"=>[["1"]]}},
+  #   "grocery"=>{"store"=>{"tags"=>[["1", "0"]]}},
+  #   "health"=>{"store"=>{"tags"=>[["1", "1"]]}},
+  #   "rei"=>{"store"=>{"name"=>[["2"]]}},
+  #   "camping"=>{"store"=>{"tags"=>[["2", "0"]]}}
   # }
   #
   def load full_entity_data

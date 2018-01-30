@@ -1,5 +1,3 @@
-require 'entity/entity'
-
 class ApplicationController < ActionController::API
   #
   # To standarize the error response

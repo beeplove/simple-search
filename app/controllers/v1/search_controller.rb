@@ -1,4 +1,5 @@
 class V1::SearchController < ApplicationController
+  include SearchConcern
 
   # TODO: use an api documentation generator
   #
@@ -9,6 +10,7 @@ class V1::SearchController < ApplicationController
   #
   # GET /search
   def index
-    jsonator id: 1, name: "Mohammad Khan"
+    jsonator search_result(params[:q])
   end
+
 end
