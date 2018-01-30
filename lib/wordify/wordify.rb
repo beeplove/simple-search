@@ -64,16 +64,23 @@ class Wordify
   private :constuct_and_add_to_data
 
   def add_to_data value, entity_name, item_key, key, idx=nil
-      arr = [item_key]
-      arr << idx unless idx.nil?
-      # arr = [_id of document in entity, index of value in key if it's an array]
+    # arr = [_id of document in entity, index of value in key if it's an array]
+    arr = [item_key]
+    arr << idx unless idx.nil?
 
-      @@data[value] = {} if @@data[value].nil?
-      @@data[value][entity_name] = {} if @@data[value][entity_name].nil?
+    value = value.upcase
+    @@data[value] = {} if @@data[value].nil?
+    @@data[value][entity_name] = {} if @@data[value][entity_name].nil?
 
-      @@data[value][entity_name][key] = [] if @@data[value][entity_name][key].nil?
+    @@data[value][entity_name][key] = [] if @@data[value][entity_name][key].nil?
 
-      @@data[value][entity_name][key] << arr
+    @@data[value][entity_name][key] << arr
   end
   private :add_to_data
+
+  def get value
+    return if @@data.nil?
+
+    @@data[value.upcase]
+  end
 end

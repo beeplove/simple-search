@@ -26,11 +26,11 @@ module SearchConcern
     fields = opts[:fields] || []
 
     entity_names.each do |entity_name|                            # "person"
-      next unless @wordify.data[query] && @wordify.data[query][entity_name]
+      next unless @wordify.get(query) && @wordify.get(query)[entity_name]
 
       result[entity_name] = [] unless result[entity_name]
 
-      @wordify.data[query][entity_name].each do |key, values|     # "activities"=>[["1", "1"]]
+      @wordify.get(query)[entity_name].each do |key, values|     # "activities"=>[["1", "1"]]
         next if fields.present? && !fields.include?(key)
 
         values.each do |value|                                    # ["1", "1"]

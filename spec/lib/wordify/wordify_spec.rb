@@ -17,8 +17,8 @@ RSpec.describe Wordify do
 
     it "returns a hash with enough information to pull the document from entity data" do
       wordify.load(entity_data)
-      expect(wordify.data["hiking"].keys.sort).to eq(["person", "store"])
-      expect(wordify.data["hiking"]["store"]["tags"].first).to eq(["2", "2"])
+      expect(wordify.get("hiking").keys.sort).to eq(["person", "store"])
+      expect(wordify.get("hiking")["store"]["tags"].first).to eq(["2", "2"])
     end
   end
 end
