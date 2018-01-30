@@ -56,7 +56,17 @@ class Entity
   #   - take force into account
   #
   # returns data in the following format
-  # {"person"=>{"1"=>{"_id"=>1, "name"=>"Mohammad Khan"}}}
+  # {
+  #   "person"=>{
+  #     "1"=>{"_id"=>1, "name"=>"Mohammad Khan", "activities"=>["running", "hiking"]},
+  #     "2"=>{"_id"=>2, "name"=>"John Smith", "activities"=>["swimming", "running"]}
+  #   },
+  #   "store"=>{
+  #     "1"=>{"_id"=>1, "name"=>"publix", "tags"=>["grocery", "health"]},
+  #     "2"=>{"_id"=>2, "name"=>"rei", "tags"=>["camping", "running", "hiking", "swimming"]}
+  #   }
+  # }
+  #
   def load force=false
     id = 1
     data_hash = nil
