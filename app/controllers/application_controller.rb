@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
   # To standarize the error response
   #
   rescue_from StandardError do |exception|
-    raise exception if (Rails.env.development? && params[:force].blank?) || params[:debug].present?
+    raise exception if Rails.env.development? && params[:force].blank?
 
     message = 'something happened which was not quite expected'
     code = 1000
