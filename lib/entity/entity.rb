@@ -26,6 +26,12 @@ class Entity
     @@list
   end
 
+  def data
+    load if @@data.nil?
+
+    @@data
+  end
+
   #
   # Entity.fields_for take entity_id as a param
   # to return list of available fields in the entity

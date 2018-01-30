@@ -19,7 +19,10 @@ RSpec.describe Entity do
   end
 
   describe "#data" do
-    it "returns data avaiable for a given entity name"
+    it "returns data avaiable for a given entity name" do
+      entity = Entity.new(config)
+      expect(entity.data).not_to eql(nil)
+    end
   end
 
   describe "#load" do
