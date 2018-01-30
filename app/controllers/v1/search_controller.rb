@@ -10,7 +10,7 @@ class V1::SearchController < ApplicationController
   #
   # GET /search
   def index
-    jsonator search_result(params[:q])
+    jsonator perform_search(params[:q])
   end
 
 end

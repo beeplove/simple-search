@@ -5,7 +5,7 @@ module SearchConcern
   extend ActiveSupport::Concern
 
   included do
-    before_action :warm_up_data
+    before_action :warm_up_data, only: [:index]
   end
 
   def warm_up_data
@@ -14,16 +14,14 @@ module SearchConcern
     @wordify.load(@entity.data)
   end
 
-  def search_result query
+  def perform_search query
     # wordify chunk: "hiking"=>{"person"=>{"activities"=>[["1", "1"]]}, "store"=>{"tags"=>[["2", "2"]]}}
 
     result = {}
-
     entity_names = @entity.list.values
 
     entity_names.each do |entity_name|                            # "person"
-      next unless @wordify.data[query]
-      next unless @wordify.data[query][entity_name]
+      next unless @wordify.data[query] && @wordify.data[query][entity_name]
 
       result[entity_name] = [] unless result[entity_name]
 

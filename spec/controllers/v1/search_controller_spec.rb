@@ -20,5 +20,7 @@ RSpec.describe V1::SearchController, type: :controller do
       expect(response).to have_http_status(:ok)
       expect(response.content_type).to eq('application/json')
     end
+
+    it "returns error if param q is not provided"
   end
 end
