@@ -43,7 +43,7 @@ class Entity
       entity.load
     end
 
-    @@data[entity_id.to_s].first.keys
+    @@data[@@list[entity_id.to_s]].first.keys
   end
 
   #
@@ -66,10 +66,10 @@ class Entity
       name = filename.sub(/\.json$/i, '')
 
       data_hash = {} if data_hash.nil?
-      list_hash = [] if list_hash.nil?
+      list_hash = {} if list_hash.nil?
 
-      data_hash[id.to_s] = JSON.parse(file)
-      list_hash << { id: id, name: name }
+      data_hash[name.to_s] = JSON.parse(file)
+      list_hash[id.to_s] = name.to_s
       id = id + 1
     end
 

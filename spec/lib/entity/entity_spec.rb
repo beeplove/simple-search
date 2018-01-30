@@ -7,7 +7,7 @@ RSpec.describe Entity do
   describe "#list" do
     it "returns list of entities avaiable" do
       entity = Entity.new(config)
-      expect(entity.list.any?{|item| item[:name] == 'person'}).to eq(true)
+      expect(entity.list["1"] == 'person').to eq(true)
     end
   end
 
