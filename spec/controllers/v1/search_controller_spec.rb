@@ -8,7 +8,17 @@ RSpec.describe V1::SearchController, type: :controller do
       expect(response.content_type).to eq('application/json')
     end
 
-    it "takes e for entity, as an optional param"
-    it "takes f for field, as an optional param"
+    it "takes e for entity, as an optional param" do
+      get :index, params: { q: "John Smith", e: "person" }
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to eq('application/json')
+    end
+
+
+    it "takes f for field, as an optional param" do
+      get :index, params: { q: "hiking", f: "tags" }
+      expect(response).to have_http_status(:ok)
+      expect(response.content_type).to eq('application/json')
+    end
   end
 end
