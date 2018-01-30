@@ -8,6 +8,6 @@ class V1::EntitiesController < ApplicationController
 
   # GET /entities/:id/fields
   def fields
-    jsonator Entity.fields_for(params[:id])
+    jsonator Entity.fields_for(params[:id], CONFIG["entity"])
   end
 end

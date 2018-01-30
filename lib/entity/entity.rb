@@ -10,7 +10,6 @@ class Entity
   @@data = nil
   @@list = nil
 
-
   def initialize config={}
     raise EntityError, "need config with db_path to initialize Entity" unless config["db_path"]
     raise EntityError, "db_path doen't exist" unless Dir.exists?(config["db_path"])
@@ -28,17 +27,17 @@ class Entity
   end
 
   #
-  # Entity.fields take entity_id as a param
+  # Entity.fields_for take entity_id as a param
   # to return list of available fields in the entity
   #
-  def Entity.fields_for entity_id
-    [
-      '_id',
-      'url',
-      'external_urls',
-      'name',
-      'tags'
-    ]
+  def Entity.fields_for entity_id, config={}
+    if @@data.nil?
+      # For warming up @@data
+      entity = Entity.new(config)
+      entity.load
+    end
+
+    @@data[entity_id.to_s].first.keys
   end
 
   #
@@ -63,7 +62,7 @@ class Entity
       data_hash = {} if data_hash.nil?
       list_hash = [] if list_hash.nil?
 
-      data_hash["id"] = JSON.parse(file)
+      data_hash[id.to_s] = JSON.parse(file)
       list_hash << { id: id, name: name }
       id = id + 1
     end
