@@ -36,7 +36,7 @@ describe SearchConcernController, type: :controller do
     context "when query and entity_names are provided" do
       let(:result) { concern.perform_search("hiking", entity_names: ["store"]) }
 
-      it "returns only documents matches within entity" do
+      it "returns only documents match within entity" do
         store = result["store"][0]
 
         expect(store["_id"]).to eq(2)
@@ -47,14 +47,23 @@ describe SearchConcernController, type: :controller do
     context "when query, entity_names and fields are provided" do
       let(:result) { concern.perform_search("running", entity_names: ["person"], fields: ["activities"]) }
 
-      it "returns only documents matches within entity and field pair" do
+      it "returns only documents match within entity and field pair" do
         people = result["person"]
 
         expect(people.size).to eq(2)
       end
     end
 
-    context "when query and fields are provided"
+    context "when query and fields are provided" do
+      it "returns only documents match within fields provided across all entity" do
+        result = concern.perform_search("2", fields: ['_id'])
+        people = result["person"]
+        stores = result["store"]
+
+        expect(people.size).to eq(1)
+        expect(stores.size).to eq(1)
+      end
+    end
 
     it "does't contain duplicate document" do
       result = concern.perform_search("publix")
