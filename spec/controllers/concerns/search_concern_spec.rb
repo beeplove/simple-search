@@ -22,7 +22,7 @@ describe SearchConcernController, type: :controller do
       stores = result["store"]
 
       expect(people.size).to eq(1)
-      expect(store.size).to eq(1)
+      expect(stores.size).to eq(1)
     end
 
     context "when only query is provided" do

@@ -18,6 +18,8 @@ module SearchConcern
     # wordify chunk: "hiking"=>{"person"=>{"activities"=>[["1", "1"]]}, "store"=>{"tags"=>[["2", "2"]]}}
     result = {}
 
+    query = query.to_s
+
     entity_names = opts[:entity_names]
     entity_names = @entity.list.values if entity_names.blank?
 
