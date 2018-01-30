@@ -5,6 +5,7 @@ class Entity
   #
   # Assumptions:
   #   - documents in each entity have uniform json schema
+  #   - each document has _id key
   #
 
   @@data = nil
@@ -43,7 +44,8 @@ class Entity
       entity.load
     end
 
-    @@data[@@list[entity_id.to_s]].first.keys
+    entity_name = @@list[entity_id.to_s]
+    @@data[entity_name][@@data[entity_name].keys.first].keys
   end
 
   #
@@ -52,6 +54,9 @@ class Entity
   # TODO:
   #   - check @@data, @@list
   #   - take force into account
+  #
+  # returns data in the following format
+  # {"person"=>{"1"=>{"_id"=>1, "name"=>"Mohammad Khan"}}}
   def load force=false
     id = 1
     data_hash = nil
@@ -68,7 +73,11 @@ class Entity
       data_hash = {} if data_hash.nil?
       list_hash = {} if list_hash.nil?
 
-      data_hash[name.to_s] = JSON.parse(file)
+      data_hash[name.to_s] = {}
+      JSON.parse(file).each do |item|
+        data_hash[name.to_s][item["_id"].to_s] = item
+      end
+
       list_hash[id.to_s] = name.to_s
       id = id + 1
     end
