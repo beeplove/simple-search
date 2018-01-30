@@ -39,4 +39,12 @@ module SearchConcern
 
     result
   end
+
+  def build_opts_from params
+    opts = {}
+    opts[:entity_names] = [params[:e]] if params[:e].present?
+    opts[:fields]       = [params[:f]] if params[:f].present?
+
+    opts
+  end
 end
