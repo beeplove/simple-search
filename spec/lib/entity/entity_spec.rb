@@ -12,7 +12,10 @@ RSpec.describe Entity do
   end
 
   describe "#fields_for" do
-    it "returns list of fields avaiable for a given entity name"
+    it "returns list of fields avaiable for a given entity name" do
+      fields = Entity.fields_for(1, config)
+      expect(fields.include?("name")).to eql(true)
+    end
   end
 
   describe "#data" do
