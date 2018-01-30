@@ -12,24 +12,6 @@ describe SearchConcernController, type: :controller do
       concern.warm_up_data
     end
 
-    it "does't contain duplicate document"
-
-    it "does perform search in case-insensitive mode" do
-      result = concern.perform_search("HEALTH")
-      stores = result["store"]
-
-      expect(stores.size).to eq(1)
-    end
-
-    it "does take care of string conversion when perform a search by a number" do
-      result = concern.perform_search(1)
-      people = result["person"]
-      stores = result["store"]
-
-      expect(people.size).to eq(1)
-      expect(stores.size).to eq(1)
-    end
-
     context "when only query is provided" do
       it "returns all documents among all entity and fields when search for hiking" do
         result = concern.perform_search("hiking")
@@ -73,5 +55,27 @@ describe SearchConcernController, type: :controller do
     end
 
     context "when query and fields are provided"
+
+    it "does't contain duplicate document" do
+      result = concern.perform_search("publix")
+      stores = result["store"]
+      expect(stores.size).to eq(1)
+    end
+
+    it "does perform search in case-insensitive mode" do
+      result = concern.perform_search("HEALTH")
+      stores = result["store"]
+
+      expect(stores.size).to eq(1)
+    end
+
+    it "does take care of string conversion when perform a search by a number" do
+      result = concern.perform_search(1)
+      people = result["person"]
+      stores = result["store"]
+
+      expect(people.size).to eq(1)
+      expect(stores.size).to eq(1)
+    end
   end
 end
