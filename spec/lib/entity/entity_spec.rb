@@ -1,6 +1,5 @@
 require 'entity/entity'
 
-
 RSpec.describe Entity do
   let(:config) { CONFIG["entity"] }
 

@@ -45,6 +45,7 @@ class Entity
     end
 
     entity_name = @@list[entity_id.to_s]
+    raise EntityError, "entity id doesn't exist in database" if entity_name.blank?
     @@data[entity_name][@@data[entity_name].keys.first].keys
   end
 

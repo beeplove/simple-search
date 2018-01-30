@@ -1,3 +1,5 @@
+require 'entity/error'
+
 # TODO: find a good home to keep custom exceptions
 class QueryParamError < StandardError ; end
 
@@ -17,6 +19,10 @@ class ApplicationController < ActionController::API
     if exception.class == QueryParamError
       message = exception.message
       code = 2000
+
+    elsif exception.class == EntityError
+      message = exception.message
+      code = 3000
     end
 
     render json: {

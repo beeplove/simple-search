@@ -1,3 +1,5 @@
+require 'entity/entity'
+
 class V1::EntitiesController < ApplicationController
 
   # GET /entities
