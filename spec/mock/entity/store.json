@@ -1,0 +1,20 @@
+[
+  {
+    "_id": 1,
+    "name": "publix",
+    "tags": [
+      "grocery",
+      "health"
+    ]
+  },
+  {
+    "_id": 2,
+    "name": "rei",
+    "tags": [
+      "camping",
+      "running",
+      "hiking",
+      "swimming"
+    ]
+  }
+]
