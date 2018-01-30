@@ -13,7 +13,7 @@ class Entity
 
   def initialize config={}
     raise EntityError, "need config with db_path to initialize Entity" unless config["db_path"]
-    raise EntityError, "db_path doen't exist" unless Dir.exists?(config["db_path"])
+    raise EntityError, "db_path provided in the config doen't exist as directory" unless Dir.exists?(config["db_path"])
 
     @db_path = config["db_path"]
   end
@@ -38,14 +38,15 @@ class Entity
   # to return list of available fields in the entity
   #
   def Entity.fields_for entity_id, config={}
+    # For warming up @@data
     if @@data.nil?
-      # For warming up @@data
       entity = Entity.new(config)
       entity.load
     end
 
     entity_name = @@list[entity_id.to_s]
     raise EntityError, "entity id doesn't exist in database" if entity_name.blank?
+
     @@data[entity_name][@@data[entity_name].keys.first].keys
   end
 
@@ -59,42 +60,42 @@ class Entity
   # returns data in the following format
   # {
   #   "person"=>{
-  #     "1"=>{"_id"=>1, "name"=>"Mohammad Khan", "activities"=>["running", "hiking"]},
-  #     "2"=>{"_id"=>2, "name"=>"John Smith", "activities"=>["swimming", "running"]}
+  #     "1"=>{"_id"=>1, "name"=>"Mohammad Khan", "activities"=>["running", "hiking"], "wishlist"=>["swimming"]},
+  #     "2"=>{"_id"=>2, "name"=>"John Smith", "activities"=>["swimming", "running"], "wishlist"=>[]}
   #   },
   #   "store"=>{
-  #     "1"=>{"_id"=>1, "name"=>"publix", "tags"=>["grocery", "health"]},
+  #     "1"=>{"_id"=>1, "name"=>"publix", "tags"=>["grocery", "health", "publix"]},
   #     "2"=>{"_id"=>2, "name"=>"rei", "tags"=>["camping", "running", "hiking", "swimming"]}
   #   }
   # }
   #
   def load force=false
+    return self unless @@data.blank? && @@list.blank?
+
     id = 1
-    data_hash = nil
-    list_hash = nil
+    data_hash = {}
+    list_hash = {}
 
     Dir.entries(@db_path).sort.each do |filename|
-      filepath = @db_path + "/" + filename
-
+      filepath    = @db_path + "/" + filename
       next unless File.file?(filepath)
-      file = File.read(filepath)
 
-      name = filename.sub(/\.json$/i, '')
+      file        = File.read(filepath)
+      entity_name = filename.sub(/\.json$/i, '').to_s
 
-      data_hash = {} if data_hash.nil?
-      list_hash = {} if list_hash.nil?
-
-      data_hash[name.to_s] = {}
+      data_hash[entity_name] = {}
       JSON.parse(file).each do |item|
-        data_hash[name.to_s][item["_id"].to_s] = item
+        data_hash[entity_name][item["_id"].to_s] = item
       end
 
-      list_hash[id.to_s] = name.to_s
+      list_hash[id.to_s] = entity_name
       id = id + 1
     end
 
     @@data = data_hash
     @@list = list_hash
+
+    self
   end
 
 end

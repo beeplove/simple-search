@@ -24,7 +24,7 @@ module SearchConcern
     fields = opts[:fields] || []
 
     duplicate_check = {}
-    result = {}
+    result          = {}
 
     entity_names.each do |entity_name|                            # "person"
       next unless @wordify.get(query) && @wordify.get(query)[entity_name]
