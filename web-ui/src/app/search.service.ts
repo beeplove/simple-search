@@ -8,6 +8,7 @@ import { of } from 'rxjs/observable/of';
 @Injectable()
 export class SearchService {
   private entitiesUrl: string = 'http://localhost:3000/entities';
+  private searchUrl:   string = 'http://localhost:3000/search';
 
   constructor(
     private http: HttpClient
@@ -16,8 +17,16 @@ export class SearchService {
   getEntities(): Observable<any> {
     return this.http.get<any>(this.entitiesUrl)
       .pipe(
-        tap(response => { this.log('fetched entities with status `' + response.status + '`' )}),
+        tap(response => { this.log('fetched GET /entities with status `' + response.status + '`' )}),
         catchError(this.handleError('getEntities', {}))
+      );
+  }
+
+  getSearchResult(query): Observable<any> {
+    return this.http.get<any>(this.searchUrl, {params: {q: query}})
+      .pipe(
+        tap(response => { this.log('fetched GET /search with status `' + response.status + '`' )}),
+        catchError(this.handleError('getSearchResult', {}))
       );
   }
 

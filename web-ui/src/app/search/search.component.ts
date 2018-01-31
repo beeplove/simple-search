@@ -10,11 +10,12 @@ import { Entity } from '../entity';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  entityId: string = '';
-  entities: Entity[] = [];
-
+  query:     string = '';
+  entityId:  string = '';
   fieldName: string = '';
-  fields: string[] = [];
+
+  entities:  Entity[] = [];
+  fields:    string[] = [];
 
   constructor(
     private searchService: SearchService
@@ -26,7 +27,9 @@ export class SearchComponent implements OnInit {
   }
 
   getEntities(): void {
-    this.entities.push(new Entity(0, "Any"));
+    if (this.entities.length == 0) {
+      this.entities.push(new Entity(0, "Any"));
+    }
 
     this.searchService.getEntities()
       .subscribe(response => {
@@ -40,4 +43,16 @@ export class SearchComponent implements OnInit {
   getFields(): void {
     this.fields.push('Any');
   }
+
+  getSearchResult(): void {
+    if (this.query.length == 0) return;
+
+    this.searchService.getSearchResult(this.query)
+      .subscribe(response => {
+        if (response.status == 'error') return;
+
+        console.log(response.data);
+      });
+  }
+
 }
