@@ -2,7 +2,14 @@
   <input
     type="text"
     class="form-control"
-    placeholder="Enter word to searh">
+    placeholder="Type to search">
+</div>
+
+<div class="form-group">
+  <label for="entity">Please select an Entity</label>
+  <select class="form-control" id="entity">
+    <option *ngFor="let entity of entities" value="{{entity.id}}">{{ entity.name | titlecase }}</option>
+  </select>
 </div>
 
 <button
