@@ -9,7 +9,6 @@ import { of } from 'rxjs/observable/of';
 export class SearchService {
   private entitiesUrl: string = 'http://localhost:3000/entities';
 
-
   constructor(
     private http: HttpClient
   ) { }
@@ -26,7 +25,6 @@ export class SearchService {
   private log(message: string) {
     console.log('>> SearchService: ' + message);
   }
-
 
   /**
    * Handle Http operation that failed.

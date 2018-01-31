@@ -20,9 +20,6 @@ export class SearchComponent implements OnInit {
     private searchService: SearchService
   ) { }
 
-  /*
-   * TODO: move this.getFields to on-blur of entities instead of on-init
-  **/
   ngOnInit() {
     this.getEntities();
     this.getFields();
@@ -30,13 +27,13 @@ export class SearchComponent implements OnInit {
 
   getEntities(): void {
     this.entities.push(new Entity(0, "Any"));
-    this.entities.push(new Entity(1, "organizations"));
-    this.entities.push(new Entity(2, "users"));
-    this.entities.push(new Entity(3, "tickets"));
 
     this.searchService.getEntities()
       .subscribe(response => {
-        console.log(response);
+        if ((response.status == 'error') || (this.entities.length > 1)) return;
+        for(let i=1; response.data[i.toString()]; i++) {
+          this.entities.push(new Entity(i, response.data[i.toString()]));
+        }
       });
   }
 
