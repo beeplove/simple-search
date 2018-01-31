@@ -17,6 +17,9 @@ export class SearchComponent implements OnInit {
   entities:  Entity[] = [];
   fields:    string[] = [];
 
+  entityNames = {};
+  searchResult = {};
+
   constructor(
     private searchService: SearchService
   ) { }
@@ -34,8 +37,10 @@ export class SearchComponent implements OnInit {
     this.searchService.getEntities()
       .subscribe(response => {
         if ((response.status == 'error') || (this.entities.length > 1)) return;
-        for(let i=1; response.data[i.toString()]; i++) {
-          this.entities.push(new Entity(i, response.data[i.toString()]));
+
+        this.entityNames =response.data;
+        for(let i=1; this.entityNames[i.toString()]; i++) {
+          this.entities.push(new Entity(i, this.entityNames[i.toString()]));
         }
       });
   }
@@ -47,11 +52,11 @@ export class SearchComponent implements OnInit {
   getSearchResult(): void {
     if (this.query.length == 0) return;
 
-    this.searchService.getSearchResult(this.query)
+    this.searchService.getSearchResult(this.query, this.entityNames[this.entityId])
       .subscribe(response => {
         if (response.status == 'error') return;
 
-        console.log(response.data);
+        this.searchResult = response.data;
       });
   }
 

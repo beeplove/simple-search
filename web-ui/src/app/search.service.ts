@@ -22,8 +22,13 @@ export class SearchService {
       );
   }
 
-  getSearchResult(query): Observable<any> {
-    return this.http.get<any>(this.searchUrl, {params: {q: query}})
+  getSearchResult(query, entityName): Observable<any> {
+    let params = {};
+
+    if (query) params['q'] = query;
+    if (entityName) params['e'] = entityName;
+
+    return this.http.get<any>(this.searchUrl, { params: params })
       .pipe(
         tap(response => { this.log('fetched GET /search with status `' + response.status + '`' )}),
         catchError(this.handleError('getSearchResult', {}))
