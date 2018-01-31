@@ -11,10 +11,14 @@ export class SearchComponent implements OnInit {
   entityId: string = '';
   entities: Entity[] = [];
 
+  fieldName: string = '';
+  fields: string[] = [];
+
   constructor() { }
 
   ngOnInit() {
-    this.getEntities()
+    this.getEntities();
+    this.getFields();
   }
 
   getEntities(): void {
@@ -22,5 +26,9 @@ export class SearchComponent implements OnInit {
     this.entities.push(new Entity(1, "organizations"))
     this.entities.push(new Entity(2, "users"))
     this.entities.push(new Entity(3, "tickets"))
+  }
+
+  getFields(): void {
+    this.fields.push('Any');
   }
 }

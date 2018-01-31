@@ -12,6 +12,14 @@
   </select>
 </div>
 
+<div class="form-group">
+  <label for="entity">Please select a Field</label>
+  <select class="form-control" id="field">
+    <option *ngFor="let field of fields" value="{{field}}">{{ field }}</option>
+  </select>
+</div>
+
+
 <button
   type="submit"
   class="btn btn-primary">Search</button>
