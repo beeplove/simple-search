@@ -3,20 +3,20 @@
     type="text"
     [(ngModel)]="query"
     class="form-control"
-    placeholder="Type to search">
+    placeholder="Type to search, example: Jordan">
 </div>
 
 <div class="form-group">
   <label for="entity">Please select an Entity</label>
   <select class="form-control" id="entity" [(ngModel)]="entityId" >
-    <option *ngFor="let entity of entities" value="{{entity.id}}">{{ entity.name | titlecase }}</option>
+    <option *ngFor="let entity of entities" [ngValue]="entity.id" >{{ entity.name | titlecase }}</option>
   </select>
 </div>
 
 <div class="form-group">
   <label for="entity">Please select a Field</label>
-  <select class="form-control" id="field">
-    <option *ngFor="let field of fields" value="{{field}}">{{ field }}</option>
+  <select class="form-control" id="field" [(ngModel)]="fieldName">
+    <option *ngFor="let field of fields" [ngValue]="field">{{ field }}</option>
   </select>
 </div>
 

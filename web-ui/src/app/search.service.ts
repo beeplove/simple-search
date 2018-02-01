@@ -14,6 +14,10 @@ export class SearchService {
     private http: HttpClient
   ) { }
 
+  getFieldsUrl(id: number): string {
+    return "http://localhost:3000/entities/" + id.toString() + "/fields";
+  }
+
   getEntities(): Observable<any> {
     return this.http.get<any>(this.entitiesUrl)
       .pipe(
@@ -22,11 +26,22 @@ export class SearchService {
       );
   }
 
-  getSearchResult(query, entityName): Observable<any> {
+  getFields(entityId: number): Observable<any> {
+    return this.http.get<any>(this.getFieldsUrl(entityId))
+      .pipe(
+        tap(response => {
+          this.log('fetched GET /entities/' + entityId.toString() + '/fields with status `' + response.status + '`' )
+        }),
+        catchError(this.handleError('getEntities', {}))
+      );
+  }
+
+  getSearchResult(query, entityName, fieldName): Observable<any> {
     let params = {};
 
-    if (query) params['q'] = query;
+    if (query)      params['q'] = query;
     if (entityName) params['e'] = entityName;
+    if (fieldName)  params['f'] = fieldName;
 
     return this.http.get<any>(this.searchUrl, { params: params })
       .pipe(

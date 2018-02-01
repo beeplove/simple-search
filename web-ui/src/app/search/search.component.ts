@@ -17,7 +17,8 @@ export class SearchComponent implements OnInit {
   entities:  Entity[] = [];
   fields:    string[] = [];
 
-  entityNames = {};
+  fieldsFor    = {};
+  entityNames  = {};
   searchResult = {};
 
   constructor(
@@ -25,11 +26,10 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getEntities();
-    this.getFields();
+    this.initEntities();
   }
 
-  getEntities(): void {
+  initEntities(): void {
     if (this.entities.length == 0) {
       this.entities.push(new Entity(0, "Any"));
     }
@@ -42,17 +42,33 @@ export class SearchComponent implements OnInit {
         for(let i=1; this.entityNames[i.toString()]; i++) {
           this.entities.push(new Entity(i, this.entityNames[i.toString()]));
         }
+        this.initFields();
       });
   }
 
-  getFields(): void {
-    this.fields.push('Any');
+  initFields(): void {
+    for (let entity of this.entities) {
+      if (entity.id == 0) continue;
+
+      this.searchService.getFields(entity.id)
+        .subscribe(response => {
+          if (response.status == 'error') return;
+
+          this.fieldsFor[entity.name] = response.data;
+          for (let field of response.data) {
+            if (this.fields.indexOf(field) < 0) {
+              this.fields.push(field);
+            }
+          }
+        });
+
+    }
   }
 
   getSearchResult(): void {
     if (this.query.length == 0) return;
 
-    this.searchService.getSearchResult(this.query, this.entityNames[this.entityId])
+    this.searchService.getSearchResult(this.query, this.entityNames[this.entityId], this.fieldName)
       .subscribe(response => {
         if (response.status == 'error') return;
 
