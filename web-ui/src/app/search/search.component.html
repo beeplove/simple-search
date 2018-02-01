@@ -1,9 +1,12 @@
-<div class="input-group mb-3">
+<div class="form-group">
   <input
     type="text"
     [(ngModel)]="query"
     class="form-control"
+    [ngClass]="{'is-invalid':error.query}"
+    (change)="onChangeQuery()"
     placeholder="Type to search, example: Jordan">
+  <div class="invalid-feedback">Please type a query to perform a search</div>
 </div>
 
 <div class="form-group">
@@ -22,7 +25,7 @@
 
 <button
   type="submit"
-  (click)="getSearchResult()"
+  (click)="onClickSubmit()"
   class="btn btn-primary">Search</button>
 
 <div>

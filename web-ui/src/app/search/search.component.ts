@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
   fieldsFor    = {};
   entityNames  = {};
   searchResult = {};
+  error        = {};
 
   constructor(
     private searchService: SearchService
@@ -68,8 +69,6 @@ export class SearchComponent implements OnInit {
   }
 
   getSearchResult(): void {
-    if (this.query.length == 0) return;
-
     let entityName = this.entityName == 'any' ? '' : this.entityName;
 
     this.searchService.getSearchResult(this.query, entityName, this.fieldName)
@@ -85,4 +84,17 @@ export class SearchComponent implements OnInit {
     this.fields = this.fieldsFor[this.entityNames[this.entityId]];
   }
 
+  onChangeQuery(): void {
+    if (this.query.length > 0) this.error['query'] = false;
+  }
+
+  onClickSubmit(): void {
+    this.error['query'] = false;
+    if (this.query.length == 0) {
+      this.error['query'] = true;
+      return;
+    }
+
+    this.getSearchResult();
+  }
 }
