@@ -12,6 +12,7 @@
 <div class="form-group">
   <label for="entity">Please select an Entity</label>
   <select class="form-control" id="entity" [(ngModel)]="entityId" (change)="onChangeEnity()" >
+    <option value="" >Please select an entity (optional)</option>
     <option *ngFor="let entity of entities" [ngValue]="entity.id" >{{ entity.name | titlecase }}</option>
   </select>
 </div>
@@ -19,6 +20,7 @@
 <div class="form-group">
   <label for="entity">Please select a Field</label>
   <select class="form-control" id="field" [(ngModel)]="fieldName">
+    <option value="">Please select a field (optional)</option>
     <option *ngFor="let field of fields" [ngValue]="field">{{ field }}</option>
   </select>
 </div>
