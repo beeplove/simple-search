@@ -28,6 +28,82 @@
   (click)="onClickSubmit()"
   class="btn btn-primary">Search</button>
 
-<div>
-  {{ searchResult | json }}
+<div class="card mb-2" *ngFor="let organization of organizations">
+  <div class="card-header">
+    <a href="{{ organization.url }}" class="card-link float-right">Raw Data</a>
+    <h4>{{ organization.name }}</h4>
+    <p class="float-right">{{ organization.created_at }}</p>
+    <h6 class="card-title">{{ organization._id }} | {{ organization.external_id }}</h6>
+  </div>
+
+  <div class="card-body">
+    <div>
+      <b>Domain Names:</b>&nbsp;
+      <span class="border border-dark rounded p-1 pr-2 pl-2 mr-2" *ngFor="let domainName of organization.domain_names">
+        {{ domainName }}
+      </span>
+    </div>
+    <div class="mt-1">
+      <b>Details:</b>&nbsp;<i>{{ organization.details }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Shared Ticket:</b>&nbsp;<i>{{ organization.shared_tickets }}</i>
+    </div>
+    <div>
+      <b>Tags:</b>&nbsp;
+      <span class="border border-light rounded p-1 pr-2 pl-2 mr-2 bg-dark text-white" *ngFor="let tag of organization.tags">
+        {{ tag }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="card" *ngFor="let user of users">
+  <div class="card-body">
+    <h5 class="card-title">{{ user._id }}</h5>
+
+    <p>{{ user.url }}</p>
+    <p>{{ user.external_id }}</p>
+    <p>{{ user.created_at }}</p>
+    <p>{{ user.tags }}</p>
+
+    <p>{{ user.name }}</p>
+    <p>{{ user.alias }}</p>
+    <p>{{ user.active }}</p>
+    <p>{{ user.verified }}</p>
+    <p>{{ user.shared }}</p>
+    <p>{{ user.locale }}</p>
+    <p>{{ user.timezone }}</p>
+    <p>{{ user.last_login_at }}</p>
+    <p>{{ user.email }}</p>
+    <p>{{ user.phone }}</p>
+    <p>{{ user.signature }}</p>
+    <p>{{ user.organization_id }}</p>
+    <p>{{ user.suppended }}</p>
+    <p>{{ user.role }}</p>
+  </div>
+</div>
+
+<div class="card" *ngFor="let ticket of tickets">
+  <div class="card-body">
+    <h5 class="card-title">{{ ticket._id }}</h5>
+
+    <p>{{ ticket.url }}</p>
+    <p>{{ ticket.external_id }}</p>
+    <p>{{ ticket.created_at }}</p>
+    <p>{{ ticket.tags }}</p>
+
+
+    <p>{{ ticket.type }}</p>
+    <p>{{ ticket.subject }}</p>
+    <p>{{ ticket.description }}</p>
+    <p>{{ ticket.priority }}</p>
+    <p>{{ ticket.status }}</p>
+    <p>{{ ticket.submitter_id }}</p>
+    <p>{{ ticket.assignee_id }}</p>
+    <p>{{ ticket.organization_id }}</p>
+    <p>{{ ticket.has_incidents }}</p>
+    <p>{{ ticket.due_at }}</p>
+    <p>{{ ticket.via }}</p>
+  </div>
 </div>

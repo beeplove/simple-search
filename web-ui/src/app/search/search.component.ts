@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../search.service';
 
 import { Entity } from '../entity';
+import { Organization } from '../organization';
+import { Ticket } from '../ticket';
+import { User } from '../user';
 
 @Component({
   selector: 'app-search',
@@ -22,6 +25,11 @@ export class SearchComponent implements OnInit {
   entityNames  = {};
   searchResult = {};
   error        = {};
+
+  organizations: Array<Organization>;
+  tickets: Array<Ticket>;
+  users: Array<User>;
+
 
   constructor(
     private searchService: SearchService
@@ -76,6 +84,11 @@ export class SearchComponent implements OnInit {
         if (response.status == 'error') return;
 
         this.searchResult = response.data;
+
+        this.organizations = response.data.organizations;
+        this.tickets = response.data.organizations;
+        this.users = response.data.users;
+
       });
   }
 
