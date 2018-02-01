@@ -8,10 +8,6 @@ describe SearchConcernController, type: :controller do
   let(:concern) { SearchConcernController.new }
 
   describe "#perform_search" do
-    before do
-      concern.warm_up_data
-    end
-
     context "when only query is provided" do
       it "returns all documents among all entity and fields when search for hiking" do
         result = concern.perform_search("hiking")

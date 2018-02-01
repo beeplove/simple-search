@@ -32,8 +32,9 @@ class Wordify
   #   "CAMPING"=>{"store"=>{"tags"=>[["2", "0"]]}}
   # }
   #
-  def load data_repo
+  def load data_repo, force=false
     return unless data_repo.instance_of? Hash
+    return self if @@data && !force
 
     @@data = {}
 
@@ -45,7 +46,7 @@ class Wordify
       end
     end
 
-    @@data
+    self
   end
 
   def data
