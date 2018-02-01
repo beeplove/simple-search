@@ -32,7 +32,6 @@ export class SearchComponent implements OnInit {
   tickets: Array<Ticket>;
   users: Array<User>;
 
-
   constructor(
     private searchService: SearchService
   ) { }
@@ -60,6 +59,10 @@ export class SearchComponent implements OnInit {
   }
 
   initFields(): void {
+    this.fieldsFor = {
+      any: []
+    };
+
     for (let entity of this.entities) {
       if (entity.id == 0) continue;
 
@@ -72,15 +75,20 @@ export class SearchComponent implements OnInit {
             if (this.fields.indexOf(field) < 0) {
               this.fields.push(field);
             }
+
+            if (this.fieldsFor['any'].indexOf(field) < 0) {
+              this.fieldsFor['any'].push(field)
+            }
           }
         });
     }
-    this.fieldsFor['any'] = this.fields;
   }
 
   getSearchResult(): void {
-    let entityName = this.entityName == 'any' ? '' : this.entityName;
-    this.searchService.getSearchResult(this.query, entityName, this.fieldName)
+    let entityName = this.entityName.toLowerCase() == 'any' ? '' : this.entityName;
+    let fieldName = this.fieldName.toLowerCase() == 'any' ? '' : this.fieldName;
+
+    this.searchService.getSearchResult(this.query, entityName, fieldName)
       .subscribe(response => {
         if (response.status == 'error') return;
 
@@ -103,7 +111,11 @@ export class SearchComponent implements OnInit {
 
   onChangeEnity(): void {
     this.entityName = this.entityNames[this.entityId];
-    this.fields = this.fieldsFor[this.entityNames[this.entityId]];
+    let fields = this.fieldsFor[this.entityNames[this.entityId]];
+    if ((fields) && (fields.indexOf('Any')) < 0) {
+      fields = ['Any'].concat(fields);
+    }
+    this.fields = fields;
   }
 
   onChangeQuery(): void {
