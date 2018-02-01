@@ -5,7 +5,7 @@
     class="form-control"
     [ngClass]="{'is-invalid':error.query}"
     (change)="onChangeQuery()"
-    placeholder="Type to search, example: Jordan">
+    placeholder="Type to search, example: MegaCorp">
   <div class="invalid-feedback">Please type a query to perform a search</div>
 </div>
 
@@ -31,6 +31,7 @@
 <div class="card mb-2" *ngFor="let organization of organizations">
   <div class="card-header">
     <a href="{{ organization.url }}" class="card-link float-right">Raw Data</a>
+    <i class="far fa-building"></i>
     <h4>{{ organization.name }}</h4>
     <p class="float-right">{{ organization.created_at }}</p>
     <h6 class="card-title">{{ organization._id }} | {{ organization.external_id }}</h6>
@@ -58,29 +59,55 @@
   </div>
 </div>
 
-<div class="card" *ngFor="let user of users">
+<div class="card mb-2" *ngFor="let user of users">
+  <div class="card-header">
+    <a href="{{ user.url }}" class="card-link float-right">Raw Data</a>
+    <i class="fas fa-user"></i>
+    <h4>{{ user.name }}</h4>
+    <p>
+      <i class="fas fa-at"></i>&nbsp;{{ user.email }}<br>
+      <i class="fas fa-phone"></i>&nbsp;{{ user.phone }}
+    </p>
+    <small><i>{{ user.alias }}</i></small>
+    <p class="float-right">{{ user.created_at }}</p>
+    <h6 class="card-title">{{ user._id }} | {{ user.external_id }}</h6>
+    <small>"{{ user.signature }}"</small>
+  </div>
+
   <div class="card-body">
-    <h5 class="card-title">{{ user._id }}</h5>
-
-    <p>{{ user.url }}</p>
-    <p>{{ user.external_id }}</p>
-    <p>{{ user.created_at }}</p>
-    <p>{{ user.tags }}</p>
-
-    <p>{{ user.name }}</p>
-    <p>{{ user.alias }}</p>
-    <p>{{ user.active }}</p>
-    <p>{{ user.verified }}</p>
-    <p>{{ user.shared }}</p>
-    <p>{{ user.locale }}</p>
-    <p>{{ user.timezone }}</p>
-    <p>{{ user.last_login_at }}</p>
-    <p>{{ user.email }}</p>
-    <p>{{ user.phone }}</p>
-    <p>{{ user.signature }}</p>
-    <p>{{ user.organization_id }}</p>
-    <p>{{ user.suppended }}</p>
-    <p>{{ user.role }}</p>
+    <div class="mt-1">
+      <b>Active:</b>&nbsp;<i>{{ user.active }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Verified:</b>&nbsp;<i>{{ user.verified }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Suppended:</b>&nbsp;<i>{{ user.suppended }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Shared:</b>&nbsp;<i>{{ user.shared }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Role:</b>&nbsp;<i>{{ user.role }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Locale:</b>&nbsp;<i>{{ user.locale }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Timezone:</b>&nbsp;<i>{{ user.timezone }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Last Login at:</b>&nbsp;<i>{{ user.last_login_at }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Organization ID:</b>&nbsp;<i>{{ user.organization_id }}</i>
+    </div>
+    <div>
+      <b>Tags:</b>&nbsp;
+      <span class="border border-light rounded p-1 pr-2 pl-2 mr-2 bg-dark text-white" *ngFor="let tag of user.tags">
+        {{ tag }}
+      </span>
+    </div>
   </div>
 </div>
 
