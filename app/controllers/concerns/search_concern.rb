@@ -8,6 +8,10 @@ module SearchConcern
     before_action :warm_up_data, only: [:index]
   end
 
+  #
+  # TODO:
+  #   - avoid warming up data for every request
+  #
   def warm_up_data
     @entity = Entity.new(CONFIG["entity"]) if @entity.nil?
     @wordify = Wordify.new

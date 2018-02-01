@@ -82,15 +82,26 @@ class Wordify
   def add_to_data value, entity_name, item_key, key, idx=nil
     # arr = [_id of document in entity, index of value in key if it's an array]
     arr = [item_key]
+
+    # TODO: No usage of index of value when it's in an array, so far.
     arr << idx unless idx.nil?
 
-    value = value.upcase
-    @@data[value] = {} if @@data[value].nil?
-    @@data[value][entity_name] = {} if @@data[value][entity_name].nil?
+    value.split.each do |word|
+      word = word.upcase
 
-    @@data[value][entity_name][key] = [] if @@data[value][entity_name][key].nil?
+      @@data[word]                    = {} if @@data[word].nil?
+      @@data[word][entity_name]       = {} if @@data[word][entity_name].nil?
+      @@data[word][entity_name][key]  = [] if @@data[word][entity_name][key].nil?
 
-    @@data[value][entity_name][key] << arr
+      @@data[word][entity_name][key] << arr
+    end
+    # value = value.upcase
+    # @@data[value] = {} if @@data[value].nil?
+    # @@data[value][entity_name] = {} if @@data[value][entity_name].nil?
+
+    # @@data[value][entity_name][key] = [] if @@data[value][entity_name][key].nil?
+
+    # @@data[value][entity_name][key] << arr
   end
   private :add_to_data
 

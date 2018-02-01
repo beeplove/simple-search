@@ -20,5 +20,11 @@ RSpec.describe Wordify do
       expect(wordify.get("hiking").keys.sort).to eq(["person", "store"])
       expect(wordify.get("hiking")["store"]["tags"].first).to eq(["2", "2"])
     end
+
+    it "stores data by word" do
+      wordify.load(entity_data)
+      expect(wordify.get("John").keys.sort).to eq(["person"])
+    end
+
   end
 end
