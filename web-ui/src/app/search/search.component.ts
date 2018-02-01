@@ -10,12 +10,13 @@ import { Entity } from '../entity';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  query:     string = '';
-  entityId:  string = '';
-  fieldName: string = '';
+  query:       string = '';
+  entityId:    string = '';
+  entityName:  string = '';
+  fieldName:   string = '';
 
-  entities:  Entity[] = [];
-  fields:    string[] = [];
+  entities:    Entity[] = [];
+  fields:      string[] = [];
 
   fieldsFor    = {};
   entityNames  = {};
@@ -31,7 +32,7 @@ export class SearchComponent implements OnInit {
 
   initEntities(): void {
     if (this.entities.length == 0) {
-      this.entities.push(new Entity(0, "Any"));
+      this.entities.push(new Entity(0, "any"));
     }
 
     this.searchService.getEntities()
@@ -39,6 +40,7 @@ export class SearchComponent implements OnInit {
         if ((response.status == 'error') || (this.entities.length > 1)) return;
 
         this.entityNames =response.data;
+        this.entityNames["0"] = "any";
         for(let i=1; this.entityNames[i.toString()]; i++) {
           this.entities.push(new Entity(i, this.entityNames[i.toString()]));
         }
@@ -61,19 +63,26 @@ export class SearchComponent implements OnInit {
             }
           }
         });
-
     }
+    this.fieldsFor['any'] = this.fields;
   }
 
   getSearchResult(): void {
     if (this.query.length == 0) return;
 
-    this.searchService.getSearchResult(this.query, this.entityNames[this.entityId], this.fieldName)
+    let entityName = this.entityName == 'any' ? '' : this.entityName;
+
+    this.searchService.getSearchResult(this.query, entityName, this.fieldName)
       .subscribe(response => {
         if (response.status == 'error') return;
 
         this.searchResult = response.data;
       });
+  }
+
+  onChangeEnity(): void {
+    this.entityName = this.entityNames[this.entityId];
+    this.fields = this.fieldsFor[this.entityNames[this.entityId]];
   }
 
 }

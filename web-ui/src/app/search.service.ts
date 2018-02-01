@@ -5,6 +5,10 @@ import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
 
+/**
+ * TODO: move hardcoded url to config
+**/
+
 @Injectable()
 export class SearchService {
   private entitiesUrl: string = 'http://localhost:3000/entities';

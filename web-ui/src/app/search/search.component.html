@@ -8,7 +8,7 @@
 
 <div class="form-group">
   <label for="entity">Please select an Entity</label>
-  <select class="form-control" id="entity" [(ngModel)]="entityId" >
+  <select class="form-control" id="entity" [(ngModel)]="entityId" (change)="onChangeEnity()" >
     <option *ngFor="let entity of entities" [ngValue]="entity.id" >{{ entity.name | titlecase }}</option>
   </select>
 </div>
