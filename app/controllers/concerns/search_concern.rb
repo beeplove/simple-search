@@ -16,7 +16,8 @@ module SearchConcern
   private :wordify
 
   def perform_search query, opts={}
-    # wordify chunk: "hiking"=>{"person"=>{"activities"=>[["1", "1"]]}, "store"=>{"tags"=>[["2", "2"]]}}
+    # wordify chunk: "HIKING"=>{"person"=>{"activities"=>[["1", "1"]]}, "store"=>{"tags"=>[["2", "2"]]}},
+
     query = query.to_s
 
     entity_names = opts[:entity_names]

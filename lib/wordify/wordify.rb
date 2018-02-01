@@ -18,13 +18,15 @@ class Wordify
   #
   # return example:
   # {
-  #   "1"=>{"person"=>{"_id"=>[["1"]]}, "store"=>{"_id"=>[["1"]]}},
-  #   "MOHAMMAD KHAN"=>{"person"=>{"name"=>[["1"]]}},
+  #   "1"=>{"person"=>{"_id"=>[["1"]]}, "store"=>{"_id"=>[["1"]]}}, 
+  #   "MOHAMMAD"=>{"person"=>{"name"=>[["1"]]}},
+  #   "KHAN"=>{"person"=>{"name"=>[["1"]]}},
   #   "RUNNING"=>{"person"=>{"activities"=>[["1", "0"], ["2", "1"]]}, "store"=>{"tags"=>[["2", "1"]]}},
   #   "HIKING"=>{"person"=>{"activities"=>[["1", "1"]]}, "store"=>{"tags"=>[["2", "2"]]}},
   #   "SWIMMING"=>{"person"=>{"wishlist"=>[["1", "0"]], "activities"=>[["2", "0"]]}, "store"=>{"tags"=>[["2", "3"]]}},
   #   "2"=>{"person"=>{"_id"=>[["2"]]}, "store"=>{"_id"=>[["2"]]}},
-  #   "JOHN SMITH"=>{"person"=>{"name"=>[["2"]]}},
+  #   "JOHN"=>{"person"=>{"name"=>[["2"]]}},
+  #   "SMITH"=>{"person"=>{"name"=>[["2"]]}},
   #   "PUBLIX"=>{"store"=>{"name"=>[["1"]], "tags"=>[["1", "2"]]}},
   #   "GROCERY"=>{"store"=>{"tags"=>[["1", "0"]]}},
   #   "HEALTH"=>{"store"=>{"tags"=>[["1", "1"]]}},
@@ -96,13 +98,6 @@ class Wordify
 
       @@data[word][entity_name][key] << arr
     end
-    # value = value.upcase
-    # @@data[value] = {} if @@data[value].nil?
-    # @@data[value][entity_name] = {} if @@data[value][entity_name].nil?
-
-    # @@data[value][entity_name][key] = [] if @@data[value][entity_name][key].nil?
-
-    # @@data[value][entity_name][key] << arr
   end
   private :add_to_data
 
