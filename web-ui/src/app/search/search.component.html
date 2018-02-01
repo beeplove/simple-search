@@ -28,6 +28,8 @@
   (click)="onClickSubmit()"
   class="btn btn-primary">Search</button>
 
+<div class="mt-5">&nbsp;</div>
+
 <div class="card mb-2" *ngFor="let organization of organizations">
   <div class="card-header">
     <a href="{{ organization.url }}" class="card-link float-right">Raw Data</a>
@@ -111,26 +113,44 @@
   </div>
 </div>
 
-<div class="card" *ngFor="let ticket of tickets">
+<div class="card mb-2" *ngFor="let ticket of tickets">
+  <div class="card-header">
+    <a href="{{ ticket.url }}" class="card-link float-right">Raw Data</a>
+    <i class="fas fa-ticket-alt"></i>
+    <h4>{{ ticket.subject }}</h4>
+    <p class="float-right">{{ ticket.created_at }}</p>
+    <h6 class="card-title">{{ ticket._id }} | {{ ticket.external_id }}</h6>
+  </div>
+
   <div class="card-body">
-    <h5 class="card-title">{{ ticket._id }}</h5>
-
-    <p>{{ ticket.url }}</p>
-    <p>{{ ticket.external_id }}</p>
-    <p>{{ ticket.created_at }}</p>
-    <p>{{ ticket.tags }}</p>
-
-
-    <p>{{ ticket.type }}</p>
-    <p>{{ ticket.subject }}</p>
     <p>{{ ticket.description }}</p>
-    <p>{{ ticket.priority }}</p>
-    <p>{{ ticket.status }}</p>
-    <p>{{ ticket.submitter_id }}</p>
-    <p>{{ ticket.assignee_id }}</p>
-    <p>{{ ticket.organization_id }}</p>
-    <p>{{ ticket.has_incidents }}</p>
-    <p>{{ ticket.due_at }}</p>
-    <p>{{ ticket.via }}</p>
+
+    <div class="mt-1">
+      <b>Type:</b>&nbsp;<i>{{ ticket.type }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Priority:</b>&nbsp;<i>{{ ticket.priority }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Status:</b>&nbsp;<i>{{ ticket.status }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Submitter ID:</b>&nbsp;<i>{{ ticket.submitter_id }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Assignee ID:</b>&nbsp;<i>{{ ticket.assignee_id }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Organization ID:</b>&nbsp;<i>{{ ticket.organization_id }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Has Incidents?:</b>&nbsp;<i>{{ ticket.has_incidents }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Due At:</b>&nbsp;<i>{{ ticket.due_at }}</i>
+    </div>
+    <div class="mt-1">
+      <b>Via:</b>&nbsp;<i>{{ ticket.via }}</i>
+    </div>
   </div>
 </div>

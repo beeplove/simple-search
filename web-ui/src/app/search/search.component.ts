@@ -86,7 +86,7 @@ export class SearchComponent implements OnInit {
         this.searchResult = response.data;
 
         this.organizations = response.data.organizations;
-        this.tickets = response.data.organizations;
+        this.tickets = response.data.tickets;
         this.users = response.data.users;
 
       });
