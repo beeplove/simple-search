@@ -6,6 +6,7 @@
     class="form-control"
     [ngClass]="{'is-invalid':error.query}"
     (change)="onChangeQuery()"
+    (keydown)="onKeyDownQuery($event)"
     placeholder="Example: Jordan">
   <div class="invalid-feedback">To perform a search, please type a word</div>
 </div>

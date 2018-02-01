@@ -133,4 +133,10 @@ export class SearchComponent implements OnInit {
 
     this.getSearchResult();
   }
+
+  onKeyDownQuery(event): void {
+    if (event.keyCode == 13) {
+      this.getSearchResult();
+    }
+  }
 }
