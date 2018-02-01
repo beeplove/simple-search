@@ -26,6 +26,8 @@ export class SearchComponent implements OnInit {
   searchResult = {};
   error        = {};
 
+  searchResultCount: number;
+
   organizations: Array<Organization>;
   tickets: Array<Ticket>;
   users: Array<User>;
@@ -78,6 +80,7 @@ export class SearchComponent implements OnInit {
 
   getSearchResult(): void {
     let entityName = this.entityName == 'any' ? '' : this.entityName;
+    this.searchResultCount = undefined;
 
     this.searchService.getSearchResult(this.query, entityName, this.fieldName)
       .subscribe(response => {
@@ -89,7 +92,15 @@ export class SearchComponent implements OnInit {
         this.tickets = response.data.tickets;
         this.users = response.data.users;
 
+        this.getSearchResultCount();
       });
+  }
+
+  getSearchResultCount(): void {
+    this.searchResultCount = 0;
+    this.searchResultCount += this.organizations ? this.organizations.length : 0;
+    this.searchResultCount += this.tickets.length ? this.tickets.length : 0;
+    this.searchResultCount += this.users.length ? this.users.length : 0;
   }
 
   onChangeEnity(): void {
