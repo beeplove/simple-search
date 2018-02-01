@@ -40,6 +40,20 @@ export class SearchComponent implements OnInit {
     this.initEntities();
   }
 
+  isValidRespone(response): boolean {
+      if (!response.status) {
+        this.error['service'] = "Sorry, backend service is down. Try again later.";
+        return false;
+      }
+
+      if (response.status == 'error') {
+        this.error['service'] = "Something went wrong. Please, try again later.";
+        return false;
+      }
+
+      return true;
+  }
+
   initEntities(): void {
     if (this.entities.length == 0) {
       this.entities.push(new Entity(0, "any"));
@@ -47,7 +61,9 @@ export class SearchComponent implements OnInit {
 
     this.searchService.getEntities()
       .subscribe(response => {
-        if ((response.status == 'error') || (this.entities.length > 1)) return;
+        if (! this.isValidRespone(response)) return;
+
+        if (this.entities.length > 1) return;
 
         this.entityNames =response.data;
         this.entityNames["0"] = "any";
@@ -68,7 +84,7 @@ export class SearchComponent implements OnInit {
 
       this.searchService.getFields(entity.id)
         .subscribe(response => {
-          if (response.status == 'error') return;
+          if (! this.isValidRespone(response)) return;
 
           this.fieldsFor[entity.name] = response.data;
           for (let field of response.data) {
@@ -90,7 +106,7 @@ export class SearchComponent implements OnInit {
 
     this.searchService.getSearchResult(this.query, entityName, fieldName)
       .subscribe(response => {
-        if (response.status == 'error') return;
+        if (! this.isValidRespone(response)) return;
 
         this.searchResult = response.data;
 
@@ -123,7 +139,7 @@ export class SearchComponent implements OnInit {
   }
 
   onClickSubmit(): void {
-    this.error['query'] = false;
+    this.error = {};
     this.searchResultCount = undefined;
 
     if (this.query.length == 0) {
