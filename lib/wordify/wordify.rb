@@ -1,5 +1,6 @@
 class Wordify
-  @@data = nil
+
+  attr_reader :data
 
   #
   # load takes data as param and return hash by keeping input hash's value as key
@@ -36,9 +37,9 @@ class Wordify
   #
   def load data_repo, force=false
     return unless data_repo.instance_of? Hash
-    return self if @@data && !force
+    return self if @data && !force
 
-    @@data = {}
+    @data = {}
 
     data_repo.each do |entity_name, entity_data|                      # ticket/user
       entity_data.each do |item_key, item|                            # 1/2/3 (value of _id key)
@@ -51,13 +52,9 @@ class Wordify
     self
   end
 
-  def data
-    @@data
-  end
-
   #
   # Assumption: document in entity doesn't have deep nested objects
-  # TODO: if above assumption is wrong, construct @@data recursively.
+  # TODO: if above assumption is wrong, construct @data recursively.
   #
   def constuct_and_add_to_data value, entity_name, item_key, key
     return if value.blank?
@@ -92,21 +89,21 @@ class Wordify
     value.split.each do |word|
       word = word.upcase
 
-      @@data[word]                    = {} if @@data[word].nil?
-      @@data[word][entity_name]       = {} if @@data[word][entity_name].nil?
-      @@data[word][entity_name][key]  = [] if @@data[word][entity_name][key].nil?
+      @data[word]                    = {} if @data[word].nil?
+      @data[word][entity_name]       = {} if @data[word][entity_name].nil?
+      @data[word][entity_name][key]  = [] if @data[word][entity_name][key].nil?
 
-      @@data[word][entity_name][key] << arr
+      @data[word][entity_name][key] << arr
     end
   end
   private :add_to_data
 
   #
-  # get the object from @@data for value (case-insensitive)
+  # get the object from @data for value (case-insensitive)
   #
   def get value
-    return if @@data.nil?
+    return if @data.nil?
 
-    @@data[value.upcase]
+    @data[value.upcase]
   end
 end

@@ -8,9 +8,6 @@ class Entity
   #   - each document has _id key
   #
 
-  @@data = nil
-  @@list = nil
-
   def initialize config={}
     raise EntityError, "need config with db_path to initialize Entity" unless config["db_path"]
     raise EntityError, "db_path provided in the config doen't exist as directory" unless Dir.exists?(config["db_path"])
@@ -22,15 +19,15 @@ class Entity
   # list returns a list of entity available in the database
   #
   def list
-    load if @@list.nil?
+    load if @list.nil?
 
-    @@list
+    @list
   end
 
   def data
-    load if @@data.nil?
+    load if @data.nil?
 
-    @@data
+    @data
   end
 
   #
@@ -38,23 +35,22 @@ class Entity
   # to return list of available fields in the entity
   #
   def Entity.fields_for entity_id, config={}
-    # For warming up @@data
-    if @@data.nil?
-      entity = Entity.new(config)
-      entity.load
-    end
+    # For warming up @data
+    entity = Entity.new(config)
 
-    entity_name = @@list[entity_id.to_s]
+    entity_name = entity.list[entity_id.to_s]
     raise EntityError, "entity id doesn't exist in database" if entity_name.blank?
 
-    @@data[entity_name][@@data[entity_name].keys.first].keys
+    data = entity.data
+
+    data[entity_name][data[entity_name].keys.first].keys
   end
 
   #
-  # Load json data from db/ folder to @@data
+  # Load json data from db/ folder to @data
   #
   # TODO:
-  #   - check @@data, @@list
+  #   - check @data, @list
   #   - take force into account
   #
   # returns data in the following format
@@ -70,7 +66,7 @@ class Entity
   # }
   #
   def load force=false
-    return self unless @@data.blank? && @@list.blank?
+    return self unless @data.blank? && @list.blank?
 
     id = 1
     data_hash = {}
@@ -92,8 +88,8 @@ class Entity
       id = id + 1
     end
 
-    @@data = data_hash
-    @@list = list_hash
+    @data = data_hash
+    @list = list_hash
 
     self
   end
