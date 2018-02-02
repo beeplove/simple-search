@@ -4,7 +4,7 @@ class V1::EntitiesController < ApplicationController
 
   # GET /entities
   def index
-    jsonator Entity.new(CONFIG["entity"]).list
+    jsonator ENTITY.list
   end
 
   # GET /entities/:id/fields
