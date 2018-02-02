@@ -30,5 +30,14 @@ module SimpleSearch
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.autoload_paths << "#{Rails.root}/lib"
+
+
+    config.after_initialize do
+      require 'entity/entity'
+      require 'wordify/wordify'
+
+      ::ENTITY = Entity.new(CONFIG["entity"])
+      ::WORDIFY = Wordify.new(ENTITY.data)
+    end
   end
 end

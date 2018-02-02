@@ -5,13 +5,12 @@ module SearchConcern
   extend ActiveSupport::Concern
 
   def entity
-    @entity ||= Entity.new(CONFIG["entity"])
+    ENTITY
   end
   private :entity
 
-
   def wordify
-    @wordify ||= Wordify.new(entity.data)
+    WORDIFY
   end
   private :wordify
 
