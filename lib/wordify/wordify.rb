@@ -1,3 +1,5 @@
+require 'wordify/error'
+
 class Wordify
 
   attr_reader :data
@@ -35,9 +37,8 @@ class Wordify
   #   "CAMPING"=>{"store"=>{"tags"=>[["2", "0"]]}}
   # }
   #
-  def load data_repo, force=false
-    return unless data_repo.instance_of? Hash
-    return self if @data && !force
+  def initialize data_repo
+    raise WordifyError, "need config with db_path to initialize Entity" unless data_repo.instance_of? Hash
 
     @data = {}
 
@@ -48,8 +49,6 @@ class Wordify
         end
       end
     end
-
-    self
   end
 
   #

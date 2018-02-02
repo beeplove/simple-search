@@ -23,12 +23,4 @@ RSpec.describe Entity do
       expect(entity.data).not_to eql(nil)
     end
   end
-
-  # describe "#load" do
-  #   it "loads all data from database" do
-  #     entity = Entity.new(config)
-  #     entity.load
-  #     expect(entity.data).not_to eq(nil)
-  #   end
-  # end
 end

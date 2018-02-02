@@ -93,5 +93,6 @@ class Entity
 
     self
   end
+  private :load
 
 end

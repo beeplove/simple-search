@@ -11,7 +11,7 @@ module SearchConcern
 
 
   def wordify
-    @wordify ||= Wordify.new.load(entity.data)
+    @wordify ||= Wordify.new(entity.data)
   end
   private :wordify
 

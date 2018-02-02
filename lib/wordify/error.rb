@@ -1,0 +1,1 @@
+class WordifyError < ArgumentError ; end
